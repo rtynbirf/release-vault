@@ -1,0 +1,8 @@
+# Защита от случайного раскрытия plaintext в шифрованном архиве
+*.key
+*.pem
+*.pass
+*.password
+.decrypted/
+__decrypted__/
+*~
