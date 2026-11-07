@@ -40,13 +40,14 @@ jobs:
           failures = []
           for rel in releases:
               tag = rel["tag_name"]
+              tag_safe = tag.replace("/", "_")
               assets = {a["name"]: a for a in rel["assets"]}
               sums_name = next((n for n in assets if n.endswith("__SHA256SUMS.txt")), None)
               print(f"ФАКТ: релиз {tag}: ассетов {len(assets)}, sums={'да' if sums_name else 'НЕТ'}")
               if sums_name is None:
                   failures.append(f"{tag}: нет __SHA256SUMS.txt")
                   continue
-              p = f"/tmp/{tag}__SHA256SUMS.txt"
+              p = f"/tmp/{tag_safe}__SHA256SUMS.txt"
               subprocess.run(["gh", "api", f"repos/{REPO}/releases/assets/{assets[sums_name]['id']}",
                               "-H", "Accept: application/octet-stream", "-o", p], check=True)
               lines = []
