@@ -31,6 +31,7 @@ jobs:
           python3 - <<'PYEOF'
           import json, os, subprocess, sys
 
+          REPO = os.environ["GITHUB_REPOSITORY"]
           releases = json.load(open("/tmp/releases.json"))
           if not releases:
               sys.exit("ФАКТ: релизов нет — сверять нечего (сейф пуст?)")
@@ -46,7 +47,7 @@ jobs:
                   failures.append(f"{tag}: нет __SHA256SUMS.txt")
                   continue
               p = f"/tmp/{tag}__SHA256SUMS.txt"
-              subprocess.run(["gh", "api", f"repos/$GITHUB_REPOSITORY/releases/assets/{assets[sums_name]['id']}",
+              subprocess.run(["gh", "api", f"repos/{REPO}/releases/assets/{assets[sums_name]['id']}",
                               "-H", "Accept: application/octet-stream", "-o", p], check=True)
               lines = []
               for raw in open(p, encoding="utf-8", errors="replace"):
@@ -73,7 +74,7 @@ jobs:
               for size, name in small:
                   dst = f"/tmp/vault/{name}"
                   subprocess.run(["gh", "api",
-                                  f"repos/$GITHUB_REPOSITORY/releases/assets/{assets[name]['id']}",
+                                  f"repos/{REPO}/releases/assets/{assets[name]['id']}",
                                   "-H", "Accept: application/octet-stream", "-o", dst], check=True)
                   hh = subprocess.run(["sha256sum", dst], capture_output=True, text=True,
                                       check=True).stdout.split()[0]
