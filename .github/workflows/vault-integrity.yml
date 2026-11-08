@@ -109,4 +109,3 @@ jobs:
         run: python3 wave3/seal_manifest.py --selftest
       - name: "Пломба манифеста — потери 🔴, устаревание 🟡 (soft)"
         run: python3 wave3/seal_manifest.py --soft
-        run: python3 wave3/seal_manifest.py --soft
