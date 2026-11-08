@@ -1,0 +1,22 @@
+{
+  "schema": "wave4/assets-watchdog@1",
+  "note": "Дозор смотрит ТОЛЬКО публичные репы: GITHUB_TOKEN воркфлоу не читает приватные (404) — приватные добавляются при появлении PAT-секрета. Сейф (релизы import/* этой репы) — зона vault-integrity (хеши шифротекстов); здесь — дозор манифестов исходных реп и нулевых файлов в git. Ротация выборки хешей по номеру недели: все части обходятся за несколько недель без скачки всего каждую неделю.",
+  "watch": [
+    {
+      "repo": "rtynbirf/singulyar-llm",
+      "git_tree_zero_files": true,
+      "releases": [
+        {
+          "tag": "weights-v1",
+          "manifest": { "kind": "repo_file", "path": "MANIFEST.txt", "format": "parts-lines" },
+          "download_check": { "limit_mb": 100, "sample": 2 }
+        }
+      ]
+    },
+    {
+      "repo": "rtynbirf/release-vault",
+      "git_tree_zero_files": true,
+      "releases": []
+    }
+  ]
+}

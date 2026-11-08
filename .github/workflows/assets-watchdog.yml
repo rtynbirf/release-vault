@@ -1,0 +1,66 @@
+# assets-watchdog — страж релизных ассетов
+# ПРЕДЛОЖЕНИЕ issue #4 (волна ×4 W4-C). Эмерджентное из волны FIX-2: релиз
+# weights-v1 singulyar-llm обнаружен ПУСТЫМ при живом манифесте — без дозора
+# это замечают только при попытке скачивания.
+# Принципы клетки: ключей нет (закон клетки AGENTS.md) — дозор сверяет ТОЛЬКО
+# размеры/хеши/структуру живым API; расшифровок нет; ассеты append-only.
+# Нарушение → код 1 → append-only авто-issue с дедупом (шаг ниже).
+
+name: "assets-watchdog — страж релизных ассетов"
+
+on:
+  schedule:
+    - cron: "31 3 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: assets-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    name: Сверка манифестов против живых релизов
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout (пин по SHA — учитель OpenSSF Scorecard, канон self-audit.yml)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Страж — живая сверка
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/assets_watchdog.py --config assets-watchdog.config.json --report watchdog-report.md
+
+      - name: Отчёт в summary
+        if: always()
+        run: |
+          if [ -f watchdog-report.md ]; then
+            cat watchdog-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Авто-issue по расхождению (append-only, дедуп по заголовку)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          TITLE="🌊 СТРАЖ: расхождение релизных ассетов с манифестами"
+          {
+            echo "ФАКТ: страж нашёл расхождение. Прогон: $RUN_URL"
+            echo
+            cat watchdog-report.md
+          } > watchdog-issue-body.md
+          EXISTING="$(gh issue list --state open --json number,title \
+            --jq ".[] | select(.title == \"$TITLE\") | .number" | head -1 || true)"
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file watchdog-issue-body.md
+            echo "ФАКТ: дописал к живому авто-issue #$EXISTING (дедуп, append-only)"
+          else
+            gh issue create --title "$TITLE" --body-file watchdog-issue-body.md
+            echo "ФАКТ: создан авто-issue"
+          fi
