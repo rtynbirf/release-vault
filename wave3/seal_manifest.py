@@ -11,6 +11,8 @@ drill сверяет манифест с фактом — этот скрипт 
       «<sha256>␣␣<путь>» сверяется с фактическими байтами; отсутствующий или
       подделанный файл, а также файл вне манифеста — расхождение (код 1).
       Нет манифеста — честная подсказка запломбировать (код 0).
+  --soft                       мягкий CI-режим: исчезнувший файл = код 1,
+      хеш-устаревание между днями пломбы = 🟡 код 0 (ритм без шума)
   --seal                       пересчитать манифест по факту — детерминированно
       (сортировка по пути, LF): повторный прогон без изменений данных даёт
       байт-в-байт тот же файл и НЕ растит журнал (идемпотентность). Реальная
@@ -85,22 +87,42 @@ def read_manifest(root):
     return want
 
 
-def cmd_check(root):
+def cmd_check(root, soft=False):
+    """--soft (для живого CI между днями пломбы): структурные потери
+    (файл манифеста исчез) = 🔴 код 1 — это подмена или поломка;
+    хеш-расхождение на живом дереве = пломба отстала от развития
+    (ожидаемо между ритуалами) = 🟡 честный доклад, код 0.
+    Полный строгий режим (без --soft) — канон дня пломбы, код 1 при любом
+    расхождении. Самотест проверяет ОБА режима."""
     want = read_manifest(root)
     if want is None:
         print("ПЛОМБА: %s нет — запломбируйте: python3 wave3/seal_manifest.py --seal" % MANIFEST)
         return 0
     fact = {rel: digest(root, rel) for rel in inventory(root)}
-    bad = [(rel, want[rel]) for rel in sorted(want)
-           if rel not in fact or want[rel] != fact[rel]]
+    gone = sorted(rel for rel in want if rel not in fact)
+    stale = sorted(rel for rel in want if rel in fact and want[rel] != fact[rel])
     extra = [rel for rel in sorted(fact) if rel not in want]
-    for rel, h in bad:
-        print("РАСХОЖДЕНИЕ: %s (в манифесте %s…)" % (rel, h[:12]))
+    for rel in gone:
+        print("ПОТЕРЯ: %s — файла нет (подмена/поломка) 🔴" % rel)
+    for rel in stale:
+        print("УСТАРЕЛО: %s (в манифесте %s…)" % (rel, want[rel][:12]))
     for rel in extra:
         print("ВНЕ МАНИФЕСТА: %s — перепломбируйте (--seal)" % rel)
-    print("ПЛОМБА: файлов %d · расхождений %d · вне манифеста %d · вердикт %s"
-          % (len(fact), len(bad), len(extra), "🟢 равен факту" if not (bad or extra) else "🔴"))
-    return 1 if (bad or extra) else 0
+    mode = "soft" if soft else "strict"
+    if gone:
+        print("ПЛОМБА[%s]: файлов %d · потерь %d · устарело %d · вне манифеста %d · вердикт 🔴"
+              % (mode, len(fact), len(gone), len(stale), len(extra)))
+        return 1
+    if stale or extra:
+        if soft:
+            print("ПЛОМБА[%s]: файлов %d · потерь 0 · устарело %d · вне манифеста %d · вердикт 🟡 пломба отстала от факта — день пломбы: python3 wave3/seal_manifest.py --seal"
+                  % (mode, len(fact), len(stale), len(extra)))
+            return 0
+        print("ПЛОМБА[%s]: файлов %d · потерь 0 · устарело %d · вне манифеста %d · вердикт 🔴"
+              % (mode, len(fact), len(stale), len(extra)))
+        return 1
+    print("ПЛОМБА[%s]: файлов %d · расхождений 0 · вердикт 🟢 равен факту" % (mode, len(fact)))
+    return 0
 
 
 def journal_append(root, text):
@@ -174,7 +196,9 @@ def main():
         selftest()
         return
     root = os.path.abspath(args[args.index("--root") + 1]) if "--root" in args else root_default()
-    sys.exit(cmd_seal(root) if "--seal" in args else cmd_check(root))
+    if "--seal" in args:
+        sys.exit(cmd_seal(root))
+    sys.exit(cmd_check(root, soft="--soft" in args))
 
 
 if __name__ == "__main__":

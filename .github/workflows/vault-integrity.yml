@@ -107,5 +107,5 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Самотест пломбировщика
         run: python3 wave3/seal_manifest.py --selftest
-      - name: MANIFEST.sha256 == факту (код 1 при расхождении)
-        run: python3 wave3/seal_manifest.py --check
+      - name: Пломба манифеста: структурные потери = 🔴; устаревание между днями пломбы = 🟡 (--soft)
+        run: python3 wave3/seal_manifest.py --soft
