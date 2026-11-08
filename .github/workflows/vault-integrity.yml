@@ -107,5 +107,6 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Самотест пломбировщика
         run: python3 wave3/seal_manifest.py --selftest
-      - name: Пломба манифеста: структурные потери = 🔴; устаревание между днями пломбы = 🟡 (--soft)
+      - name: "Пломба манифеста — потери 🔴, устаревание 🟡 (soft)"
+        run: python3 wave3/seal_manifest.py --soft
         run: python3 wave3/seal_manifest.py --soft
