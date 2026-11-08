@@ -1,0 +1,30 @@
+# release-vault
+> Encrypted off-site archive (AES-256-CBC/PBKDF2-600k) of release assets from private repos. Filenames are neutralized; manifests are encrypted. Key held only by the owner. Created 2026-11-07.
+
+Автоген 2026-11-08 · источник: живой GitHub API (номера и файлы не руками) · владелец rtynbirf · ветка `main`
+
+## Мембрана
+- README.md — для человека (release-vault — Шифрованное хранилище релизных ассетов)
+- AGENTS.md — есть
+- LICENSE — MIT
+- topics: aes-256, backup, offline-first, system-layer
+
+## Карта корня
+- .github/
+- .gitignore
+- AGENTS.md
+- CODEOWNERS
+- CONTRIBUTING.md
+- LICENSE
+- PULSE.md
+- README.md
+- SECURITY.md
+
+## CI
+- workflow: self-audit
+- workflow: vault-integrity
+
+## Ссылки
+- [GitHub](https://github.com/rtynbirf/release-vault)
+- [README](https://github.com/rtynbirf/release-vault/blob/main/README.md)
+- [raw llms.txt](https://raw.githubusercontent.com/rtynbirf/release-vault/main/llms.txt)
