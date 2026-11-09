@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="banner.png" alt="release-vault — Зашифрованный оф-сайт архив: AES-256-CBC / PBKDF2 600k" width="100%">
+</div>
+
 # release-vault — Шифрованное хранилище релизных ассетов
 
 <p align="center"><img src=".github/social-preview.png" alt="release-vault" width="100%"></p>
