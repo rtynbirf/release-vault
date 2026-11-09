@@ -28,3 +28,10 @@
 2. Releases — тела (`.enc` + `__SHA256SUMS.txt` + `__MANIFEST.enc`).
 3. `.github/workflows/vault-integrity.yml` — машинная сверка целостности.
 4. `.github/workflows/self-audit.yml` — еженедельный ПУЛЬС (гигиена/свежесть).
+
+
+## Никогда не делать (Never do)
+
+- Never force-push в основную ветку: история роя append-only.
+- Never трогать мембранные файлы (README.md, AGENTS.md, llms.txt) без пломбы в polimat-hub.
+- Never коммитить секреты и токены: токен, попавший в чат, считается скомпрометированным и подлежит отзыву.
