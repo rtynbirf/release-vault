@@ -29,7 +29,22 @@ jobs:
           set -euo pipefail
           gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" --paginate > /tmp/releases.json
           python3 - <<'PYEOF'
-          import json, os, subprocess, sys
+          import json, os, subprocess, sys, time
+
+          def gh_download(asset_id, attempts=4):
+              # ретрай с бэкоффом: gh api изредка срывается мгновенно на
+              # последовательных скачиваниях больших ассетов (64+ МиБ)
+              last = None
+              for i in range(attempts):
+                  r = subprocess.run(["gh", "api",
+                                      f"repos/{REPO}/releases/assets/{asset_id}",
+                                      "-H", "Accept: application/octet-stream"],
+                                     capture_output=True)
+                  if r.returncode == 0:
+                      return r.stdout
+                  last = f"code={r.returncode} err={r.stderr.decode('utf-8','replace')[-200:]}"
+                  time.sleep(10 * (i + 1))
+              sys.exit(f"ФАКТ: скачивание ассета {asset_id} не задалось: {last}")
 
           REPO = os.environ["GITHUB_REPOSITORY"]
           releases = json.load(open("/tmp/releases.json"))
@@ -48,9 +63,7 @@ jobs:
                   failures.append(f"{tag}: нет __SHA256SUMS.txt")
                   continue
               p = f"/tmp/{tag_safe}__SHA256SUMS.txt"
-              data = subprocess.run(["gh", "api", f"repos/{REPO}/releases/assets/{assets[sums_name]['id']}",
-                                    "-H", "Accept: application/octet-stream"],
-                                   capture_output=True, check=True).stdout
+              data = gh_download(assets[sums_name]['id'])
               open(p, "w", encoding="utf-8", errors="replace").write(data.decode("utf-8", "replace"))
               lines = []
               for raw in open(p, encoding="utf-8", errors="replace"):
@@ -76,11 +89,7 @@ jobs:
               os.makedirs("/tmp/vault", exist_ok=True)
               for size, name in small:
                   dst = f"/tmp/vault/{name}"
-                  raw = subprocess.run(["gh", "api",
-                                        f"repos/{REPO}/releases/assets/{assets[name]['id']}",
-                                        "-H", "Accept: application/octet-stream"],
-                                       capture_output=True, check=True).stdout
-                  open(dst, "wb").write(raw)
+                  open(dst, "wb").write(gh_download(assets[name]['id']))
                   hh = subprocess.run(["sha256sum", dst], capture_output=True, text=True,
                                       check=True).stdout.split()[0]
                   sampled += 1
