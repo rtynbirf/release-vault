@@ -37,6 +37,7 @@ jobs:
               last = None
               for i in range(attempts):
                   r = subprocess.run(["gh", "api",
+                                      "--allow-escape-sequences",
                                       f"repos/{REPO}/releases/assets/{asset_id}",
                                       "-H", "Accept: application/octet-stream"],
                                      capture_output=True)
