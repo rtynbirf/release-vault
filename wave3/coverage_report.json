@@ -9,7 +9,7 @@
     "mismatch": [
       {"path": ".github/social-preview.png", "manifest": "f14054d5", "actual": "5f93841f"},
       {"path": ".github/workflows/vault-integrity.yml", "manifest": "db6c6227", "actual": "c3ca00c0"},
-      {"path": "AGENTS.md", "manifest": "f6e89c8a", "actual": "7f55a3f6"},
+      {"path": "AGENTS.md", "manifest": "f6e89c8a", "actual": "7c55a3f6"},
       {"path": "PULSE.md", "manifest": "1e3b8e89", "actual": "01a4cbd0"},
       {"path": "README.md", "manifest": "5bcb81e2", "actual": "5882aefc"}
     ],
