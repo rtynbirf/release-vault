@@ -1,0 +1,26 @@
+{
+  "kind": "coverage-report",
+  "пункт": "П-12/T12 · покрытие манифеста + 3-2-1-1-0",
+  "generated_at": "2026-11-10T17:35:00Z",
+  "source": "живой GitHub API (contents ×21, releases ×100)",
+  "manifest": {
+    "files": 21,
+    "ok": 16,
+    "mismatch": [
+      {"path": ".github/social-preview.png", "manifest": "f14054d5", "actual": "5f93841f"},
+      {"path": ".github/workflows/vault-integrity.yml", "manifest": "db6c6227", "actual": "c3ca00c0"},
+      {"path": "AGENTS.md", "manifest": "f6e89c8a", "actual": "7f55a3f6"},
+      {"path": "PULSE.md", "manifest": "1e3b8e89", "actual": "01a4cbd0"},
+      {"path": "README.md", "manifest": "5bcb81e2", "actual": "5882aefc"}
+    ],
+    "missing": []
+  },
+  "releases": {
+    "count": 7,
+    "assets": 325,
+    "bytes": 28923104106,
+    "note": "import/* тома зашифрованы, MANIFEST.enc + SHA256SUMS при каждом"
+  },
+  "verdict": "список с планом долива: 5 файлов изменились после пломбы 2026-11-08T23:48:13 (8851b7633a41) — живые документы (PULSE/README/AGENTS/workflow/preview); перепломбировать wave3/seal_manifest.py, ЖУРНАЛ-ПЛОМБ.md остаётся append-only; отсутствующих 0",
+  "приёмка": "П-12: скрипт сверки выводит список с планом долива — исполнено (coverage_report.py повторяем)"
+}
