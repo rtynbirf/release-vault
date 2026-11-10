@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Если используете этот проект, процитируйте его так."
+title: "release-vault"
+abstract: "Encrypted off-site archive (AES-256-CBC/PBKDF2-600k) of release assets from private repos. Filenames are neutralized; manifests are encrypted. Key held only by the owner. Created 2026-11-07."
+authors:
+  - name: "Полимат-Универсум (rtynbirf)"
+repository-code: "https://github.com/rtynbirf/release-vault"
+license: "MIT"
