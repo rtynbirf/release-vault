@@ -2,6 +2,15 @@
   <img src="banner.png" alt="release-vault — Зашифрованный оф-сайт архив: AES-256-CBC / PBKDF2 600k" width="100%">
 </div>
 
+<!--ФОРЖ:МУЗА:НАЧАЛО-->
+<div align="center">
+  <img src="repo-muse.svg" width="100%" alt="Муза release-vault: картина кузни ПОЛИМАТ, раунд 8" />
+  <br/>
+  <img src="forge-divider.svg" width="62%" alt="разделитель кузни ПОЛИМАТ" />
+</div>
+<!--ФОРЖ:МУЗА:КОНЕЦ-->
+
+
 # release-vault — Шифрованное хранилище релизных ассетов
 
 <p align="center"><img src=".github/social-preview.png" alt="release-vault" width="100%"></p>
@@ -38,3 +47,10 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
   размеры, состояния, нулевые файлы (md5 пустого входа `d41d8cd9…`), выборочные
   sha256 «лёгких» частей с ротацией по неделе. Нарушение → append-only авто-issue.
   Конфиг: `assets-watchdog.config.json`; смотрятся публичные репы.
+
+<!--ФОРЖ:ПОДВАЛ-->
+---
+
+<div align="center">
+  <sub>◆ картина и штандарт — ручная ковка <a href="https://github.com/rtynbirf">КУЗНИ ПОЛИМАТ</a> · ЧЕЛОВЕК=АККАУНТ=PID1 ◆</sub>
+</div>
