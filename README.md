@@ -4,11 +4,12 @@
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
 <div align="center">
-  <img src="repo-muse.svg" width="100%" alt="Муза release-vault: картина кузни ПОЛИМАТ, раунд 8" />
+  <img src="repo-muse.svg" width="100%" alt="Муза release-vault: мастерская ПИРАНЕЗИ · СВОДЫ, кузня ПОЛИМАТ, раунд 11" />
   <br/>
-  <img src="forge-divider.svg" width="62%" alt="разделитель кузни ПОЛИМАТ" />
+  <img src="forge-divider.svg" width="62%" alt="делитель мастерской ПИРАНЕЗИ · СВОДЫ" />
 </div>
 <!--ФОРЖ:МУЗА:КОНЕЦ-->
+
 
 
 # release-vault — Шифрованное хранилище релизных ассетов
