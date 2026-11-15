@@ -49,6 +49,17 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
   sha256 «лёгких» частей с ротацией по неделе. Нарушение → append-only авто-issue.
   Конфиг: `assets-watchdog.config.json`; смотрятся публичные репы.
 
+## Что лежит
+
+- `import/branches-2026-11-08/` — шифротексты релизных ассетов, вынесенных из приватных репо 08.11.2026, с их `__SHA256SUMS.txt`.
+- `wave3/` — отчёт покрытия и скрипты пломбы волны-3 (`coverage_report.py`, `seal_manifest.py`), «ЖУРНАЛ-ПЛОМБ» и сертификат копии.
+- `assets-watchdog.config.json` — конфиг стража ассетов исходных реп.
+
+## Дом
+
+- Ядро дома — [polymath-core](https://github.com/rtynbirf/polymath-core); живой реестр аккаунта — [index](https://github.com/rtynbirf/index).
+- Лицензия — MIT ([LICENSE](LICENSE)).
+
 <!--ФОРЖ:ПОДВАЛ-->
 ---
 
