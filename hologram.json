@@ -2,6 +2,7 @@
  "hologram": 1,
  "root": "c223bd4a2f6a56783c1fbdb1b1f671fa61c3150ecf320c82796ea5763043a696",
  "n": 73,
+ "storage": 68,
  "r": 3,
  "self": {
   "name": "release-vault",
@@ -307,6 +308,12 @@
   {
    "name": "door-zero",
    "desc": "Door Zero: дверь без контента. PID 0 системы: удаление ломает boot. GET -> 204, POST/PUT -> 403 Void.",
+   "lang": "Python",
+   "cluster": ""
+  },
+  {
+   "name": "hologram",
+   "desc": "осколок знает целое: Merkle-осколки + Рид-Соломон (Целое из любых k из n), 64 репо вселенной, стратегия слоёв",
    "lang": "Python",
    "cluster": ""
   }
