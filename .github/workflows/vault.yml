@@ -1,0 +1,61 @@
+# Хранилище района (волна ×7, 2026-11-18) — принцип №6 канона 27:
+# «дом должен уметь пережить сам себя». Еженедельно: клон всех публичных
+# репо района (--depth 1) + летопись issues/PR в JSON → tar.gz на репо →
+# релиз-ассеты в release-vault. Мир (rOpenSci gitcellar) берёт миграционный
+# API для приватного среза; район дома публичен — хватает публичного зеркала.
+# Smoke-режим: 5 репо для пробы механизма без полного такта.
+name: хранилище района
+
+on:
+  schedule:
+    - cron: '41 2 * * 1' # еженедельно, понедельник, в тени лимитов
+  workflow_dispatch:
+    inputs:
+      smoke:
+        description: 'проба: только 5 репо'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vault
+  cancel-in-progress: false
+
+jobs:
+  vault:
+    name: mirror-district
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Список района + клон + летопись + тар
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SMOKE: ${{ inputs.smoke }}
+        run: |
+          mkdir -p vault
+          REPOS=$(gh api "/users/rtynbirf/repos?per_page=100" -q '.[].name')
+          if [ "$SMOKE" = "true" ]; then REPOS=$(echo "$REPOS" | head -5); fi
+          echo "$REPOS" > vault/_index.txt
+          echo "$REPOS" | while read -r r; do
+            echo "зеркалю $r"
+            git clone --depth 1 --quiet "https://github.com/rtynbirf/$r" "vault/$r" \
+              || { echo "skip $r"; continue; }
+            gh api "repos/rtynbirf/$r/issues?state=all&per_page=100" > "vault/$r-issues.json" \
+              || echo '[]' > "vault/$r-issues.json"
+            tar -czf "vault/$r.tar.gz" -C vault "$r"
+            rm -rf "vault/$r"
+          done
+          du -sh vault | tail -1
+
+      - name: Релиз-ассеты
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="vault-$(date -u +%F)"
+          gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create "$TAG" -R "$GITHUB_REPOSITORY" \
+                 -t "Хранилище района $TAG" \
+                 -n "автоматический срез района (код --depth 1 + issues/PR JSON); восстановление: скачать, распаковать, git clone из тара"
+          gh release upload "$TAG" vault/*.tar.gz vault/_index.txt -R "$GITHUB_REPOSITORY" --clobber
