@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="banner.png" alt="release-vault — Зашифрованный оф-сайт архив: AES-256-CBC / PBKDF2 600k" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/release-vault@main/banner.png" alt="release-vault — Зашифрованный оф-сайт архив: AES-256-CBC / PBKDF2 600k" width="100%">
 </div>
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
 <div align="center">
-  <img src="repo-muse.svg" width="100%" alt="Муза release-vault: мастерская ПИРАНЕЗИ · СВОДЫ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/release-vault@main/repo-muse.svg" width="100%" alt="Муза release-vault: мастерская ПИРАНЕЗИ · СВОДЫ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
   <br/>
-  <img src="forge-divider.svg" width="62%" alt="делитель мастерской ПИРАНЕЗИ · СВОДЫ" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/release-vault@main/forge-divider.svg" width="62%" alt="делитель мастерской ПИРАНЕЗИ · СВОДЫ" />
 </div>
 <!--ФОРЖ:МУЗА:КОНЕЦ-->
 
@@ -24,7 +24,7 @@
 
 # release-vault — Шифрованное хранилище релизных ассетов
 
-<p align="center"><img src=".github/social-preview.png" alt="release-vault" width="100%"></p>
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/rtynbirf/release-vault@main/.github/social-preview.png" alt="release-vault" width="100%"></p>
 
 
 Автономный офсайт-архив релизных ассетов приватных репозиториев `rtynbirf`.
