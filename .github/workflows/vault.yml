@@ -53,7 +53,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="vault-$(date -u +%F)"
+          TAG="vault-$(date -u +%F-%H%M)" # релизы иммутабельны — тег уникален на такт
           gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
             || gh release create "$TAG" -R "$GITHUB_REPOSITORY" \
                  -t "Хранилище района $TAG" \
