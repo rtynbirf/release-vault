@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/release-vault@main/banner.png" alt="release-vault — Зашифрованный оф-сайт архив: AES-256-CBC / PBKDF2 600k" width="100%">
+
+<a href="https://github.com/rtynbirf/release-vault"><img src="banner.png" width="100%" alt="release-vault — штандарт мастерской в каноне ORNAMENTAL MYTHO-REALISM"></a>
+
 </div>
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
@@ -12,13 +14,23 @@
 
 <!--ФОРЖ:ПАСПОРТ:НАЧАЛО-->
 <div align="center">
-  <img src="revo-page.svg" width="100%" alt="РЕВО-паспорт страницы release-vault в каноне ORNAMENTAL MYTHO-REALISM: орнаментальная решётка, медальон-миф, строение файлов, лексикон — по фактическому контенту" />
+  <img src="revo-page.svg" width="100%" alt="РЕВО-паспорт страницы release-vault №20 в каноне ORNAMENTAL MYTHO-REALISM: орнаментальная решётка, медальон-миф, строение файлов, лексикон — по фактическому контенту" />
 </div>
 
 | ФАЙЛОВ | ПАПОК | КОММИТОВ | ОБНОВЛЕНО | РЕЛИЗОВ |
 |---:|---:|---:|---|---:|
-| 64 | 9 | 197 | 2026-11-28 | 7 |
+| 64 | 9 | 1 | 2026-11-28 | 12 |
 <!--ФОРЖ:ПАСПОРТ:КОНЕЦ-->
+
+# release-vault
+
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/release-vault@main/banner.png" alt="release-vault — Зашифрованный оф-сайт архив: AES-256-CBC / PBKDF2 600k" width="100%">
+</div>
+
+
+
+
 
 
 
